@@ -1,0 +1,22 @@
+{
+  "name": "podrun",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jzarca01/podrun.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jzarca01/podrun/issues"
+  },
+  "homepage": "https://github.com/jzarca01/podrun#readme",
+  "dependencies": {
+    "node-crunker": "^0.0.2"
+  }
+}
