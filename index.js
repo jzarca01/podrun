@@ -1,8 +1,10 @@
 const NodeCrunker = require('node-crunker');
 const audio = new NodeCrunker();
 
+const beats = require('./beats')
+
 const EXAMPLE =
-  'https://media.proudmusiclibrary.com/en/file/stream/bbfa92ec6e571056a9332f96be97c12c/0/46524.mp3';
+  'https://media.simplecast.com/episodes/audio/229926/react-podcast-29_mixdown.mp3';
 
 async function getInputDuration(audioUrl) {
   try {
@@ -14,15 +16,21 @@ async function getInputDuration(audioUrl) {
   }
 }
 
+function generateBeatsList(duration) {
+  const beatsLists = []
+  let beatsDuration = 0
+  while(beatsDuration < duration) { 
+    const randomBeat = beats[Math.floor(Math.random() * beats.length)]
+    beatsDuration += randomBeat.duration
+    beatsLists.push(randomBeat.audioUrl)
+ } 
+ return beatsLists;
+}
+
 async function getBeats(duration) {
   try {
-    const audioBuffers = await audio.fetchAudio(
-      'https://media.proudmusiclibrary.com/en/file/stream/bbfa92ec6e571056a9332f96be97c12c/0/75508.mp3',
-      'https://media.proudmusiclibrary.com/en/file/stream/bbfa92ec6e571056a9332f96be97c12c/0/169886.mp3',
-      'https://media.proudmusiclibrary.com/en/file/stream/bbfa92ec6e571056a9332f96be97c12c/0/26355.mp3',
-      'https://media.proudmusiclibrary.com/en/file/stream/bbfa92ec6e571056a9332f96be97c12c/0/236563.mp3',
-      'https://media.proudmusiclibrary.com/en/file/stream/bbfa92ec6e571056a9332f96be97c12c/0/169886.mp3'
-    );
+    const beats = generateBeatsList(duration)
+    const audioBuffers = await audio.fetchAudio(...beats);
     return await audio.concatAudio(audioBuffers, duration);
   } catch (err) {
     console.log('err getBeats', err);
